@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 
-export default function Home() {
+export default function Exams() {
   return (
     <>
       <Container>
         <Title>
           <h1>RepoProvas</h1>
+          <h2>Filtrar por:</h2>
         </Title>
         <Options>
           <Button>
-            <h1>ACESSAR PROVAS</h1>
+            <h1>PROFESSORES</h1>
           </Button>
           <Button>
-            <h1>ENVIAR PROVA</h1>
+            <h1>DISCIPLINAS</h1>
           </Button>
         </Options>
       </Container>
@@ -33,11 +34,19 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   h1 {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 40px;
     color: #ffffff;
+  }
+
+  h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 20px;
+    color: #ffffff;
+    margin: 15px 0;
   }
 `;
 
