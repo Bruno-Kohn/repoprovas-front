@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import DropSubject from '../components/dropSubject';
 
-export default function Exams() {
+export default function ExamsSubject() {
   return (
     <>
       <Container>
