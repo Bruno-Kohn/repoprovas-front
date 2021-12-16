@@ -184,4 +184,5 @@ const SendFileButton = styled.button`
   font-weight: bold;
   font-size: 18px;
   font-family: 'Josefin Sans', sans-serif;
+  cursor: pointer;
 `;

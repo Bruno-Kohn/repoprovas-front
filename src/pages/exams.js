@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function Exams() {
   return (
@@ -9,12 +10,16 @@ export default function Exams() {
           <h2>Filtrar por:</h2>
         </Title>
         <Options>
-          <Button>
-            <h1>PROFESSORES</h1>
-          </Button>
-          <Button>
-            <h1>DISCIPLINAS</h1>
-          </Button>
+          <Link to='/exams/professor'>
+            <Button>
+              <h1>PROFESSORES</h1>
+            </Button>
+          </Link>
+          <Link to='/exams/subject'>
+            <Button>
+              <h1>DISCIPLINAS</h1>
+            </Button>
+          </Link>
         </Options>
       </Container>
     </>
@@ -65,6 +70,7 @@ const Button = styled.button`
   border: none;
   margin-right: 15px;
   padding: 20px;
+  cursor: pointer;
 
   h1 {
     font-family: 'Tajawal', sans-serif;

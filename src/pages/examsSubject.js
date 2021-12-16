@@ -18,7 +18,7 @@ export default function ExamsSubject() {
 }
 
 const Container = styled.div`
-  width: 900px;
+  width: 100%;
   height: auto;
   margin: 35px auto 0 auto;
 `;
