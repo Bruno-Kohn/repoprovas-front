@@ -2,11 +2,17 @@ import styled from 'styled-components';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
 import { useState } from 'react';
 
-export default function Home() {
+export default function SendFiles() {
   const [dropCategory, setDropCategory] = useState(false);
   const [dropSubject, setDropSubject] = useState(false);
-  const categoria = ['P1', 'P2', 'P3', '2CH', 'Outras'];
-  const disciplina = [
+  const [dropProfessor, setDropProfessor] = useState(false);
+  const [nome, setNome] = useState('');
+  const [link, setLink] = useState('');
+  const [categoria, setCategoria] = useState('Categoria');
+  const [disciplina, setDisciplina] = useState('Disciplina');
+  const [professor, setProfessor] = useState('Professor');
+  const categoriaa = ['P1', 'P2', 'P3', '2CH', 'Outras'];
+  const disciplinaa = [
     'HTML',
     'CSS',
     'Javascript',
@@ -15,6 +21,28 @@ export default function Home() {
     'PostgreSQL',
     'Typescript'
   ];
+  const professorr = [
+    'Bruno Kohn',
+    'Andrezza Soares',
+    'Pedro Lucas',
+    'Yohan Lopes'
+  ];
+
+  // buscar categoria, disciplina e professor no back
+  // mandar o objeto com valores { nome, link, categoria, discipina, professor }
+
+  /*function sendExamFile() {
+    if (
+      nome === '' ||
+      link === '' ||
+      categoria === '' ||
+      disciplina === '' ||
+      professor === ''
+    ) {
+      return alert('Informações incompletas, favor preencher corretamente');
+    }
+  }*/
+
   return (
     <Container>
       <Holder>
@@ -23,21 +51,19 @@ export default function Home() {
           <form>
             <InputForm
               type='text'
-              //value={name}
-              //onChange={(e) => setName(e.target.value)}
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
               placeholder='Nome'
-              //disabled={clicked}
             />
             <InputForm
               type='email'
-              //value={email}
-              //onChange={(e) => setEmail(e.target.value)}
+              value={link}
+              onChange={(e) => setLink(e.target.value)}
               placeholder='Link'
-              //disabled={clicked}
             />
             <ContainerChoiceBox>
               <ChoiceBox>
-                <h1>Categoria</h1>
+                <h1>{categoria}</h1>
                 {dropCategory ? (
                   <BsArrowUp onClick={() => setDropCategory(false)} />
                 ) : (
@@ -45,8 +71,13 @@ export default function Home() {
                 )}
               </ChoiceBox>
               <DropChoice visible={dropCategory}>
-                {categoria.map((i) => (
-                  <Choice>
+                {categoriaa.map((i) => (
+                  <Choice
+                    onClick={() => {
+                      setCategoria(i);
+                      setDropCategory(false);
+                    }}
+                  >
                     <h1>{i}</h1>
                   </Choice>
                 ))}
@@ -54,7 +85,7 @@ export default function Home() {
             </ContainerChoiceBox>
             <ContainerChoiceBox>
               <ChoiceBox>
-                <h1>Disciplina</h1>
+                <h1>{disciplina}</h1>
                 {dropSubject ? (
                   <BsArrowUp onClick={() => setDropSubject(false)} />
                 ) : (
@@ -62,8 +93,35 @@ export default function Home() {
                 )}
               </ChoiceBox>
               <DropChoice visible={dropSubject}>
-                {disciplina.map((i) => (
-                  <Choice>
+                {disciplinaa.map((i) => (
+                  <Choice
+                    onClick={() => {
+                      setDisciplina(i);
+                      setDropSubject(false);
+                    }}
+                  >
+                    <h1>{i}</h1>
+                  </Choice>
+                ))}
+              </DropChoice>
+            </ContainerChoiceBox>
+            <ContainerChoiceBox>
+              <ChoiceBox>
+                <h1>{professor}</h1>
+                {dropProfessor ? (
+                  <BsArrowUp onClick={() => setDropProfessor(false)} />
+                ) : (
+                  <BsArrowDown onClick={() => setDropProfessor(true)} />
+                )}
+              </ChoiceBox>
+              <DropChoice visible={dropProfessor}>
+                {professorr.map((i) => (
+                  <Choice
+                    onClick={() => {
+                      setProfessor(i);
+                      setDropProfessor(false);
+                    }}
+                  >
                     <h1>{i}</h1>
                   </Choice>
                 ))}
