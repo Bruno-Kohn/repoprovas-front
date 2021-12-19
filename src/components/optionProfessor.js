@@ -8,7 +8,6 @@ export default function OptionProfessor({ professor, info }) {
   const [dropProfessor, setDropProfessor] = useState(false);
   const [exam_type, setExam_type] = useState([]);
   const num = info.find((i) => i.name === professor);
-  const type = exam_type.map((i) => i.name);
 
   useEffect(
     () => {
@@ -34,7 +33,7 @@ export default function OptionProfessor({ professor, info }) {
         <BsArrowDown onClick={() => setDropProfessor(!dropProfessor)} />
       </ChoiceBox>
       <DropChoiceByProfessor
-        type={type}
+        type={exam_type}
         dropProfessor={dropProfessor}
         info={num.exams}
       />

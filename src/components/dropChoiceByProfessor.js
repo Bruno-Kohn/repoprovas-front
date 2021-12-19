@@ -1,17 +1,11 @@
 import styled from 'styled-components';
+import PreLastDrop from './PreLastDrop';
 
 export default function DropChoiceByProfessor({ type, dropProfessor, info }) {
-  console.log({ type: type, info: info });
-
   return (
     <DropChoice visible={dropProfessor}>
       {type.map((j, key) => (
-        <Choice key={key} visible={dropProfessor}>
-          <h1>
-            {j} (
-            {info.map((i) => i.exam_type.name).filter((i) => i === j).length})
-          </h1>
-        </Choice>
+        <PreLastDrop info={info} j={j} dropProfessor={dropProfessor} />
       ))}
     </DropChoice>
   );
@@ -35,21 +29,5 @@ const DropChoice = styled.div`
     font-size: 15px;
     transition: all 0.4s;
     opacity: ${(props) => (props.visible ? 1 : 0)};
-  }
-`;
-
-const Choice = styled.div`
-  width: 100%;
-  height: ${(props) => (props.visible ? 'auto' : '0px')};
-  opacity: ${(props) => (props.visible ? 1 : 0)};
-  margin: 3px 0;
-  padding: 5px;
-  cursor: pointer;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    background-color: rgba(254, 119, 177, 0.5);
   }
 `;
