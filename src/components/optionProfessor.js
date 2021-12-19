@@ -1,28 +1,43 @@
-import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
+import { BsArrowDown } from 'react-icons/bs';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import DropChoiceByProfessor from './dropChoiceByProfessor.js';
 
-export default function OptionProfessor({ professor }) {
+export default function OptionProfessor({ professor, info }) {
   const [dropProfessor, setDropProfessor] = useState(false);
+  const [exam_type, setExam_type] = useState([]);
+  const num = info.find((i) => i.name === professor);
+  const type = exam_type.map((i) => i.name);
 
-  const periodo = ['P1', 'P2', 'P3', '2CH', 'Outras'];
+  useEffect(
+    () => {
+      const request = axios.get(`http://localhost:4000/exams/types`);
+
+      request.then((response) => {
+        setExam_type(response.data);
+      });
+      request.catch((error) => {
+        console.log(error);
+      });
+    },
+    //eslint-disable-next-line
+    []
+  );
+
   return (
     <>
-      <ChoiceBox>
-        <h1>{professor}</h1>
-        {dropProfessor ? (
-          <BsArrowUp onClick={() => setDropProfessor(false)} />
-        ) : (
-          <BsArrowDown onClick={() => setDropProfessor(true)} />
-        )}
+      <ChoiceBox dropProfessor={dropProfessor}>
+        <h1>
+          {professor} ({num.exams.length})
+        </h1>
+        <BsArrowDown onClick={() => setDropProfessor(!dropProfessor)} />
       </ChoiceBox>
-      <DropChoice visible={dropProfessor}>
-        {periodo.map((j) => (
-          <Choice>
-            <h1>{j}</h1>
-          </Choice>
-        ))}
-      </DropChoice>
+      <DropChoiceByProfessor
+        type={type}
+        dropProfessor={dropProfessor}
+        info={num.exams}
+      />
     </>
   );
 }
@@ -41,30 +56,15 @@ const ChoiceBox = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  svg {
+    transition: all 0.4s;
+    transform: ${(props) =>
+      props.dropProfessor ? 'rotateX(-180deg)' : 'none'};
+  }
+
   ::placeholder {
     font-family: 'Tajawal', sans-serif;
     font-size: 20px;
     color: #000000;
   }
-`;
-
-const DropChoice = styled.div`
-  width: 326px;
-  height: auto;
-  margin: -10px auto 10px auto;
-  border-radius: 5px;
-  background: rgba(63, 227, 242, 0.5);
-  font-family: 'Tajawal', sans-serif;
-  padding: 5px;
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
-  flex-direction: column;
-  h1 {
-    font-size: 15px;
-  }
-`;
-
-const Choice = styled.div`
-  width: 100%;
-  height: auto;
-  margin: 3px 0;
 `;

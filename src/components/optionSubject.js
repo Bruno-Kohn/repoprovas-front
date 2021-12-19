@@ -78,4 +78,13 @@ const Choice = styled.div`
   width: 100%;
   height: auto;
   margin: 3px 0;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background-color: rgba(254, 119, 177, 0.5);
+  }
 `;
