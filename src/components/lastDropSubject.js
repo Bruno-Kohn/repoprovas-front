@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
 export default function LastDropSubject({ lastDrop, info }) {
-  console.log(info, 'opa');
   return info.map((i) => (
-    <LastDropBox lastDrop={lastDrop}>
+    <LastDropBox
+      href={i.link}
+      target={'_blank'}
+      rel='noreferrer'
+      lastDrop={lastDrop}
+    >
       {i.exam_type.name} - {i.name} - {i.professor.name}
     </LastDropBox>
   ));
 }
 
-const LastDropBox = styled.div`
+const LastDropBox = styled.a`
   height: 40px;
   width: 100%;
   background: #f257b0;
