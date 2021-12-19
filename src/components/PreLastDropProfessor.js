@@ -1,7 +1,7 @@
 import { IoIosArrowDown } from 'react-icons/io';
 import styled from 'styled-components';
 import { useState } from 'react';
-import LastDropPorfessor from './lastDropProfessor';
+import LastDropProfessor from './lastDropProfessor';
 
 export default function PreLastDropProfessor({ info, j, dropProfessor }) {
   const [lastDrop, setLastDrop] = useState(false);
@@ -15,7 +15,7 @@ export default function PreLastDropProfessor({ info, j, dropProfessor }) {
         </h1>
         <IoIosArrowDown onClick={() => setLastDrop(!lastDrop)} />
       </Choice>
-      <LastDropPorfessor lastDrop={lastDrop} examInfo={exams} />
+      <LastDropProfessor lastDrop={lastDrop} examInfo={exams} />
     </>
   );
 }
