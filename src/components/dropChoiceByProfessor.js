@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import PreLastDrop from './PreLastDrop';
+import PreLastDropProfessor from './PreLastDropProfessor';
 
 export default function DropChoiceByProfessor({ type, dropProfessor, info }) {
   return (
     <DropChoice visible={dropProfessor}>
       {type.map((j, key) => (
-        <PreLastDrop info={info} j={j} dropProfessor={dropProfessor} />
+        <PreLastDropProfessor info={info} j={j} dropProfessor={dropProfessor} />
       ))}
     </DropChoice>
   );

@@ -4,9 +4,6 @@ import axios from 'axios';
 
 export default function DropSubject() {
   const [subjectReq, setSubjectReq] = useState([]);
-  console.log(subjectReq);
-
-  const subject = subjectReq.map((i) => i.name).sort();
 
   useEffect(
     () => {
@@ -25,9 +22,9 @@ export default function DropSubject() {
 
   return (
     <>
-      {subject.map((i) => (
+      {subjectReq.map((i) => (
         <>
-          <OptionSubject subject={i} />
+          <OptionSubject semester={i} info={subjectReq} />
         </>
       ))}
     </>
