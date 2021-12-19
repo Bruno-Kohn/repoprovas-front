@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default function DropSubject() {
   const [subjectReq, setSubjectReq] = useState([]);
+  console.log(subjectReq);
 
   useEffect(
     () => {
