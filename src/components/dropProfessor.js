@@ -5,7 +5,6 @@ import axios from 'axios';
 export default function DropProfessor() {
   const [professorInfo, setProfessorInfo] = useState([]);
   const professor = professorInfo.map((i) => i.name);
-  console.log(professorInfo);
 
   useEffect(
     () => {
