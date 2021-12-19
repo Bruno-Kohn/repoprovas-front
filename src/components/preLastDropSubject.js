@@ -27,6 +27,7 @@ const Choice = styled.div`
   border-radius: 3px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   &:hover {
     background-color: rgba(254, 119, 177, 0.5);
