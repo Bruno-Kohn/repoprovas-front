@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
-export default function LastDropProfessor({ lastDrop, examInfo }) {
-  return <LastDropBox lastDrop={lastDrop}>{examInfo[0]?.name}</LastDropBox>;
+export default function LastDropSubject({ lastDrop, info }) {
+  console.log(info, 'opa');
+  return info.map((i) => (
+    <LastDropBox lastDrop={lastDrop}>
+      {i.exam_type.name} - {i.name} - {i.professor.name}
+    </LastDropBox>
+  ));
 }
 
 const LastDropBox = styled.div`

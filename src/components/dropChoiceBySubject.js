@@ -1,13 +1,11 @@
 import styled from 'styled-components';
+import PreLastDropSubject from './preLastDropSubject';
 
 export default function DropChoiceBySubject({ dropSubject, semester, info }) {
-  console.log(info);
   return (
     <DropChoice visible={dropSubject}>
       {semester.subject.map((j) => (
-        <Choice>
-          <h1>{j.name}</h1>
-        </Choice>
+        <PreLastDropSubject info={info} j={j} num={j.exams} />
       ))}
     </DropChoice>
   );
@@ -25,20 +23,5 @@ const DropChoice = styled.div`
   flex-direction: column;
   h1 {
     font-size: 15px;
-  }
-`;
-
-const Choice = styled.div`
-  width: 100%;
-  height: auto;
-  margin: 3px 0;
-  padding: 5px;
-  cursor: pointer;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    background-color: rgba(254, 119, 177, 0.5);
   }
 `;
