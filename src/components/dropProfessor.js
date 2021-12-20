@@ -8,7 +8,15 @@ export default function DropProfessor() {
 
   useEffect(
     () => {
-      const request = axios.get(`http://localhost:4000/professors/exams`);
+      const request = axios.get(
+        `${
+          process.env.NODE_ENV === 'production'
+            ? 'https://repoprovas-app-back.herokuapp.com'
+            : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'http://localhost:4001'
+        }/professors/exams`
+      );
 
       request.then((response) => {
         setProfessorInfo(response.data);

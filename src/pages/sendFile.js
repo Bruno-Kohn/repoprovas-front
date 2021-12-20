@@ -28,7 +28,15 @@ export default function SendFiles() {
 
   useEffect(
     () => {
-      const request = axios.get(`http://localhost:4000/exams/types`);
+      const request = axios.get(
+        `${
+          process.env.NODE_ENV === 'production'
+            ? 'https://repoprovas-app-back.herokuapp.com'
+            : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'http://localhost:4001'
+        }/exams/types`
+      );
 
       request.then((response) => {
         setCategoria(response.data);
@@ -43,7 +51,15 @@ export default function SendFiles() {
 
   useEffect(
     () => {
-      const request = axios.get(`http://localhost:4000/semester/subjects`);
+      const request = axios.get(
+        `${
+          process.env.NODE_ENV === 'production'
+            ? 'https://repoprovas-app-back.herokuapp.com'
+            : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'http://localhost:4001'
+        }/semester/subjects`
+      );
 
       request.then((response) => {
         setDisciplina(response.data);
@@ -58,7 +74,15 @@ export default function SendFiles() {
 
   useEffect(
     () => {
-      const request = axios.get(`http://localhost:4000/professors/exams`);
+      const request = axios.get(
+        `${
+          process.env.NODE_ENV === 'production'
+            ? 'https://repoprovas-app-back.herokuapp.com'
+            : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'http://localhost:4001'
+        }/professors/exams`
+      );
 
       request.then((response) => {
         setProfessor(response.data);
@@ -73,13 +97,22 @@ export default function SendFiles() {
 
   function enviarProva(e) {
     e.preventDefault();
-    const request = axios.post('http://localhost:4000/exams', {
-      name: nome,
-      link: link,
-      exam_type_id: categoriaEsc.id,
-      professor_id: professorEsc.id,
-      subject_id: disciplinaEsc.id
-    });
+    const request = axios.post(
+      `${
+        process.env.NODE_ENV === 'production'
+          ? 'https://repoprovas-app-back.herokuapp.com'
+          : process.env.NODE_ENV === 'development'
+          ? 'http://localhost:4000'
+          : 'http://localhost:4001'
+      }/exams`,
+      {
+        name: nome,
+        link: link,
+        exam_type_id: categoriaEsc.id,
+        professor_id: professorEsc.id,
+        subject_id: disciplinaEsc.id
+      }
+    );
 
     request.then(() => navigate('/'));
     request.catch((error) => console.log(error));

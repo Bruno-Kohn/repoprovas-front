@@ -7,7 +7,15 @@ export default function DropSubject() {
 
   useEffect(
     () => {
-      const request = axios.get(`http://localhost:4000/semester/subjects`);
+      const request = axios.get(
+        `${
+          process.env.NODE_ENV === 'production'
+            ? 'https://repoprovas-app-back.herokuapp.com'
+            : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'http://localhost:4001'
+        }/semester/subjects`
+      );
 
       request.then((response) => {
         setSubjectReq(response.data);

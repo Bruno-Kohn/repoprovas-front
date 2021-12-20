@@ -11,7 +11,15 @@ export default function OptionProfessor({ professor, info }) {
 
   useEffect(
     () => {
-      const request = axios.get(`http://localhost:4000/exams/types`);
+      const request = axios.get(
+        `${
+          process.env.NODE_ENV === 'production'
+            ? 'https://repoprovas-app-back.herokuapp.com'
+            : process.env.NODE_ENV === 'development'
+            ? 'http://localhost:4000'
+            : 'http://localhost:4001'
+        }/exams/types`
+      );
 
       request.then((response) => {
         setExam_type(response.data);
