@@ -1,69 +1,113 @@
 import styled from 'styled-components';
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function SendFiles() {
+  const navigate = useNavigate();
   const [dropCategory, setDropCategory] = useState(false);
   const [dropSubject, setDropSubject] = useState(false);
   const [dropProfessor, setDropProfessor] = useState(false);
   const [nome, setNome] = useState('');
   const [link, setLink] = useState('');
-  const [categoria, setCategoria] = useState('Categoria');
-  const [disciplina, setDisciplina] = useState('Disciplina');
-  const [professor, setProfessor] = useState('Professor');
-  const categoriaa = ['P1', 'P2', 'P3', '2CH', 'Outras'];
-  const disciplinaa = [
-    'HTML',
-    'CSS',
-    'Javascript',
-    'React',
-    'NodeJS',
-    'PostgreSQL',
-    'Typescript'
-  ];
-  const professorr = [
-    'Bruno Kohn',
-    'Andrezza Soares',
-    'Pedro Lucas',
-    'Yohan Lopes'
-  ];
+  const [categoria, setCategoria] = useState([]);
+  const [categoriaEsc, setCategoriaEsc] = useState({ name: '' });
+  const [disciplina, setDisciplina] = useState([]);
+  const [disciplinaEsc, setDisciplinaEsc] = useState({ name: '' });
+  const [professor, setProfessor] = useState([]);
+  const [professorEsc, setProfessorEsc] = useState({ name: '' });
 
-  // buscar categoria, disciplina e professor no back
-  // mandar o objeto com valores { nome, link, categoria, discipina, professor }
+  console.log(
+    professor.filter((i) =>
+      i.exams.some((j) => j.subject_id === disciplinaEsc.id)
+    ),
+    'aqui'
+  );
+  console.log(disciplina);
 
-  /*function sendExamFile() {
-    if (
-      nome === '' ||
-      link === '' ||
-      categoria === '' ||
-      disciplina === '' ||
-      professor === ''
-    ) {
-      return alert('Informações incompletas, favor preencher corretamente');
-    }
-  }*/
+  useEffect(
+    () => {
+      const request = axios.get(`http://localhost:4000/exams/types`);
+
+      request.then((response) => {
+        setCategoria(response.data);
+      });
+      request.catch((error) => {
+        console.log(error);
+      });
+    },
+    //eslint-disable-next-line
+    []
+  );
+
+  useEffect(
+    () => {
+      const request = axios.get(`http://localhost:4000/semester/subjects`);
+
+      request.then((response) => {
+        setDisciplina(response.data);
+      });
+      request.catch((error) => {
+        console.log(error);
+      });
+    },
+    //eslint-disable-next-line
+    []
+  );
+
+  useEffect(
+    () => {
+      const request = axios.get(`http://localhost:4000/professors/exams`);
+
+      request.then((response) => {
+        setProfessor(response.data);
+      });
+      request.catch((error) => {
+        console.log(error);
+      });
+    },
+    //eslint-disable-next-line
+    []
+  );
+
+  function enviarProva(e) {
+    e.preventDefault();
+    const request = axios.post('http://localhost:4000/exams', {
+      name: nome,
+      link: link,
+      exam_type_id: categoriaEsc.id,
+      professor_id: professorEsc.id,
+      subject_id: disciplinaEsc.id
+    });
+
+    request.then(() => navigate('/'));
+    request.catch((error) => console.log(error));
+  }
 
   return (
     <Container>
       <Holder>
         <Logo>RepoProvas</Logo>
         <ContainerForm>
-          <form>
+          <form onSubmit={enviarProva}>
             <InputForm
               type='text'
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               placeholder='Nome'
+              required
             />
             <InputForm
-              type='email'
               value={link}
               onChange={(e) => setLink(e.target.value)}
               placeholder='Link'
+              required
+              type='url'
             />
             <ContainerChoiceBox>
               <ChoiceBox>
-                <h1>{categoria}</h1>
+                <h1>{categoriaEsc?.name ? categoriaEsc.name : 'Categoria'}</h1>
                 {dropCategory ? (
                   <BsArrowUp onClick={() => setDropCategory(false)} />
                 ) : (
@@ -71,21 +115,23 @@ export default function SendFiles() {
                 )}
               </ChoiceBox>
               <DropChoice visible={dropCategory}>
-                {categoriaa.map((i) => (
+                {categoria.map((j) => (
                   <Choice
                     onClick={() => {
-                      setCategoria(i);
+                      setCategoriaEsc(j);
                       setDropCategory(false);
                     }}
                   >
-                    <h1>{i}</h1>
+                    <h1>{j.name}</h1>
                   </Choice>
                 ))}
               </DropChoice>
             </ContainerChoiceBox>
             <ContainerChoiceBox>
               <ChoiceBox>
-                <h1>{disciplina}</h1>
+                <h1>
+                  {disciplinaEsc?.name ? disciplinaEsc.name : 'Disciplina'}
+                </h1>
                 {dropSubject ? (
                   <BsArrowUp onClick={() => setDropSubject(false)} />
                 ) : (
@@ -93,21 +139,23 @@ export default function SendFiles() {
                 )}
               </ChoiceBox>
               <DropChoice visible={dropSubject}>
-                {disciplinaa.map((i) => (
-                  <Choice
-                    onClick={() => {
-                      setDisciplina(i);
-                      setDropSubject(false);
-                    }}
-                  >
-                    <h1>{i}</h1>
-                  </Choice>
-                ))}
+                {disciplina
+                  .map((i) => i.subject)
+                  .map((j) => (
+                    <Choice
+                      onClick={() => {
+                        setDisciplinaEsc(j[0]);
+                        setDropSubject(false);
+                      }}
+                    >
+                      <h1>{j[0].name}</h1>
+                    </Choice>
+                  ))}
               </DropChoice>
             </ContainerChoiceBox>
             <ContainerChoiceBox>
               <ChoiceBox>
-                <h1>{professor}</h1>
+                <h1>{professorEsc?.name ? professorEsc.name : 'Professor'}</h1>
                 {dropProfessor ? (
                   <BsArrowUp onClick={() => setDropProfessor(false)} />
                 ) : (
@@ -115,16 +163,20 @@ export default function SendFiles() {
                 )}
               </ChoiceBox>
               <DropChoice visible={dropProfessor}>
-                {professorr.map((i) => (
-                  <Choice
-                    onClick={() => {
-                      setProfessor(i);
-                      setDropProfessor(false);
-                    }}
-                  >
-                    <h1>{i}</h1>
-                  </Choice>
-                ))}
+                {professor
+                  .filter((i) =>
+                    i.exams.some((j) => j.subject_id === disciplinaEsc.id)
+                  )
+                  .map((j) => (
+                    <Choice
+                      onClick={() => {
+                        setProfessorEsc(j);
+                        setDropProfessor(false);
+                      }}
+                    >
+                      <h1>{j.name}</h1>
+                    </Choice>
+                  ))}
               </DropChoice>
             </ContainerChoiceBox>
 
